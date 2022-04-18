@@ -1,0 +1,6 @@
+case $1 in
+   [a-z] ) echo "character is lowercase";;
+   [A-Z] ) echo "character is uppercase";;
+   [0-9] ) echo "charactr is numeral";;
+   ? ) echo "it is a special character"
+esac
