@@ -2,7 +2,13 @@
 
 if [ $# -ne 1 ]
 then 
-  echo "try <$0> <arg>"
+  echo "try sh $0 argument"
+  exit 0
+fi
+if [ $1 -le 1 ]
+then
+  echo "        OUTPUT      "
+  echo "Number  is NOT PRIME"
   exit 0
 fi
 n=$1
@@ -18,14 +24,14 @@ do
   fi
 i=`expr $i + 1`
 done
- echo "___OUTPUT___"
+ echo "        OUTPUT      "
 
 if [ $f -eq 0 ]
 then 
-   echo "Number you entered is NOT PRIME"
+   echo "Number  is NOT PRIME"
 
 else
 
-   echo "Number you entered is PRIME"
+   echo "Number  is PRIME"
 
 fi
