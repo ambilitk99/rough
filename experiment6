@@ -1,50 +1,346 @@
-_____________________________EXPERIMENT-6_________________________________________________
-______________________________SELECT
+_________________________________EXPERIMENT-6____________________________________________
+___________________________________SELECT________________________________________________
 
 
 
 
-1.  List all customer details.
+1. List all customer details.
 
+mysql> select * from customer;
++-----+---------+-----------+-----------+----------+
+| cid | name    | address   | city      | phone    |
++-----+---------+-----------+-----------+----------+
+| 101 | Fathima | Kannur    | knr       | 98470011 |
+| 102 | Aneetha | idukki    | munnar    | 45657677 |
+| 104 | Krish   | Kozhikode | kkd       | 91880011 |
+| 106 | abilash | calicut   | kozhikode | 45652771 |
++-----+---------+-----------+-----------+----------+
+4 rows in set (0.00 sec)
 
+__________________________________________________________________________________________
 2.List pname, price of all products.
 
+mysql> select * from product;
++-----+------------+---------+
+| pid | pname      | price   |
++-----+------------+---------+
+|   1 | calculator | 102.000 |
+|   2 | pen        |  51.031 |
+|   3 | pencil     | 153.000 |
+|   4 | soap       |  20.400 |
+|   5 | dress      | 530.400 |
++-----+------------+---------+
+5 rows in set (0.00 sec)
 
+mysql> select pname,price from product;
++------------+---------+
+| pname      | price   |
++------------+---------+
+| calculator | 102.000 |
+| pen        |  51.031 |
+| pencil     | 153.000 |
+| soap       |  20.400 |
+| dress      | 530.400 |
++------------+---------+
+5 rows in set (0.00 sec)
+
+
+__________________________________________________________________________________________
 3.List all invoice items, avoid duplicates.
 
 
+mysql> select * from invoiceitem;
++-------+------+----------+
+| inmid | pid  | quantity |
++-------+------+----------+
+|  2001 |    3 |        4 |
+|  2002 |    3 |        4 |
+|  2002 |    4 |        5 |
+|  2001 |    1 |        2 |
+|  2001 |    2 |       10 |
+|  2002 |    3 |       11 |
+|  2005 |    2 |       12 |
++-------+------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select distinct inmid from invoiceitem;
++-------+
+| inmid |
++-------+
+|  2001 |
+|  2002 |
+|  2005 |
++-------+
+
+
+__________________________________________________________________________________________
 4.List product price between 50rs and 150rs
 
+mysql> select * from product;
++-----+------------+---------+
+| pid | pname      | price   |
++-----+------------+---------+
+|   1 | calculator | 102.000 |
+|   2 | pen        |  51.031 |
+|   3 | pencil     | 153.000 |
+|   4 | soap       |  20.400 |
+|   5 | dress      | 530.400 |
++-----+------------+---------+
+5 rows in set (0.00 sec)
 
+mysql> select * from product where price between 50 and 150;
++-----+------------+---------+
+| pid | pname      | price   |
++-----+------------+---------+
+|   1 | calculator | 102.000 |
+|   2 | pen        |  51.031 |
++-----+------------+---------+
+2 rows in set (0.00 sec)
+
+__________________________________________________________________________________________
 5.List the customer details who lives in ‘ekm’,’tvm’.
 
+mysql> select * from customer;
++-----+---------+------------+-----------+----------+
+| cid | name    | address    | city      | phone    |
++-----+---------+------------+-----------+----------+
+| 101 | Fathima | Kannur     | knr       | 98470011 |
+| 102 | Aneetha | idukki     | munnar    | 45657677 |
+| 104 | Krish   | Kozhikode  | kkd       | 91880011 |
+| 106 | abilash | calicut    | kozhikode | 45652771 |
+| 107 | Fathima | Kannur     | ekm       | 98470011 |
+| 108 | Aneetha | Eranakulam | ekm       | 90440011 |
+| 109 | Krish   | Kozhikode  | kkd       | 91880011 |
+| 110 | Sree    | trivandrum | tvm       | 75100011 |
+| 111 | abilash | calicut    | tvm       | 45652771 |
++-----+---------+------------+-----------+----------+
+9 rows in set (0.00 sec)
 
-6.List the invoice details from 1st January 2021 to 31st march 2021
+
+mysql> select * from customer where city='ekm' or city='tvm';
++-----+---------+------------+------+----------+
+| cid | name    | address    | city | phone    |
++-----+---------+------------+------+----------+
+| 107 | Fathima | Kannur     | ekm  | 98470011 |
+| 108 | Aneetha | Eranakulam | ekm  | 90440011 |
+| 110 | Sree    | trivandrum | tvm  | 75100011 |
+| 111 | abilash | calicut    | tvm  | 45652771 |
++-----+---------+------------+------+----------+
+4 rows in set (0.00 sec)
 
 
+
+__________________________________________________________________________________________
+6.List the invoice details from 1st January 2021 to 31st march 2022
+
+
+
+mysql> select * from invoicemaster;
++-------+------+------------+
+| inmid | cid  | invdate    |
++-------+------+------------+
+|  2001 |  101 | 2022-03-29 |
+|  2002 |  102 | 2021-04-09 |
+|  2005 |  104 | 2021-08-28 |
+|  2006 |  104 | 2022-08-19 |
+|  2007 |  104 | 2022-04-28 |
++-------+------+------------+
+5 rows in set (0.00 sec)
+ 
+
+mysql> select * from invoicemaster where invdate between '2021-01-01' and '2022-03-31';
++-------+------+------------+
+| inmid | cid  | invdate    |
++-------+------+------------+
+|  2001 |  101 | 2022-03-29 |
+|  2002 |  102 | 2021-04-09 |
+|  2005 |  104 | 2021-08-28 |
++-------+------+------------+
+3 rows in set (0.00 sec)
+
+
+____________________________________________________________________________________
 7.List the customer details who not live in ‘tvm’.
 
+mysql> select * from customer;
++-----+---------+------------+-----------+----------+
+| cid | name    | address    | city      | phone    |
++-----+---------+------------+-----------+----------+
+| 101 | Fathima | Kannur     | knr       | 98470011 |
+| 102 | Aneetha | idukki     | munnar    | 45657677 |
+| 104 | Krish   | Kozhikode  | kkd       | 91880011 |
+| 106 | abilash | calicut    | kozhikode | 45652771 |
+| 107 | Fathima | Kannur     | ekm       | 98470011 |
+| 108 | Aneetha | Eranakulam | ekm       | 90440011 |
+| 109 | Krish   | Kozhikode  | kkd       | 91880011 |
+| 110 | Sree    | trivandrum | tvm       | 75100011 |
+| 111 | abilash | calicut    | tvm       | 45652771 |
++-----+---------+------------+-----------+----------+
+9 rows in set (0.00 sec)
 
-8.List
-the customers who have no phone number.
+mysql> select * from customer where city not in ('tvm');
++-----+---------+------------+-----------+----------+
+| cid | name    | address    | city      | phone    |
++-----+---------+------------+-----------+----------+
+| 101 | Fathima | Kannur     | knr       | 98470011 |
+| 102 | Aneetha | idukki     | munnar    | 45657677 |
+| 104 | Krish   | Kozhikode  | kkd       | 91880011 |
+| 106 | abilash | calicut    | kozhikode | 45652771 |
+| 107 | Fathima | Kannur     | ekm       | 98470011 |
+| 108 | Aneetha | Eranakulam | ekm       | 90440011 |
+| 109 | Krish   | Kozhikode  | kkd       | 91880011 |
++-----+---------+------------+-----------+----------+
+7 rows in set (0.00 sec)
 
 
+__________________________________________________________________________________________
+8.List the customers who have no phone number.
+
+mysql> select * from customer;
++-----+---------+------------+-----------+----------+
+| cid | name    | address    | city      | phone    |
++-----+---------+------------+-----------+----------+
+| 101 | Fathima | Kannur     | knr       | 98470011 |
+| 102 | Aneetha | idukki     | munnar    | 45657677 |
+| 103 | Anu     | Eranakulam | ekm       |     NULL |
+| 104 | Krish   | Kozhikode  | kkd       | 91880011 |
+| 106 | abilash | calicut    | kozhikode | 45652771 |
+| 107 | Fathima | Kannur     | ekm       | 98470011 |
+| 108 | Aneetha | Eranakulam | ekm       | 90440011 |
+| 109 | Krish   | Kozhikode  | kkd       | 91880011 |
+| 110 | Sree    | trivandrum | tvm       | 75100011 |
+| 111 | abilash | calicut    | tvm       | 45652771 |
++-----+---------+------------+-----------+----------+
+10 rows in set (0.00 sec)
+
+
+mysql> select * from customer where phone is null;
++-----+------+------------+------+-------+
+| cid | name | address    | city | phone |
++-----+------+------------+------+-------+
+| 103 | Anu  | Eranakulam | ekm  |  NULL |
++-----+------+------------+------+-------+
+1 row in set (0.00 sec)
+
+__________________________________________________________________________________________
 9.Display customer names in descending order.
 
 
+
+mysql> select name from customer order by name desc;
++---------+
+| name    |
++---------+
+| Sree    |
+| Krish   |
+| Krish   |
+| Fathima |
+| Fathima |
+| Anu     |
+| Aneetha |
+| Aneetha |
+| abilash |
+| abilash |
++---------+
+10 rows in set (0.00 sec)
+
+
+__________________________________________________________________________________________
 10.Display the customer details sorted in ascending by city and descending by names.
 
 
+mysql> select * from customer order by city asc, name desc;
++-----+---------+------------+-----------+----------+
+| cid | name    | address    | city      | phone    |
++-----+---------+------------+-----------+----------+
+| 107 | Fathima | Kannur     | ekm       | 98470011 |
+| 103 | Anu     | Eranakulam | ekm       |     NULL |
+| 108 | Aneetha | Eranakulam | ekm       | 90440011 |
+| 104 | Krish   | Kozhikode  | kkd       | 91880011 |
+| 109 | Krish   | Kozhikode  | kkd       | 91880011 |
+| 101 | Fathima | Kannur     | knr       | 98470011 |
+| 106 | abilash | calicut    | kozhikode | 45652771 |
+| 102 | Aneetha | idukki     | munnar    | 45657677 |
+| 110 | Sree    | trivandrum | tvm       | 75100011 |
+| 111 | abilash | calicut    | tvm       | 45652771 |
++-----+---------+------------+-----------+----------+
+10 rows in set (0.00 sec)
+______________________________________________________________________________________
 11.Find the customer names start with ‘A’.
 
+mysql> select name from customer where name like 'a%';
++---------+
+| name    |
++---------+
+| Aneetha |
+| Anu     |
+| abilash |
+| Aneetha |
+| abilash |
++---------+
+5 rows in set (0.00 sec)
 
+
+__________________________________________________________________________________________
 12.Find the customer names who have ‘e’ or ‘a’ in them.
 
 
-13.Find the customer names who have at least 3 characters.
+mysql> select name from customer where name like '%a%' or '%e%';
++---------+
+| name    |
++---------+
+| Fathima |
+| Aneetha |
+| Anu     |
+| abilash |
+| Fathima |
+| Aneetha |
+| abilash |
++---------+
+7 rows in set, 0 warning (0.00 sec)
+
+__________________________________________________________________________________________
+13.Find the customer names who have at least 4 characters.
+
+mysql> select name from customer where name like '____%';
++---------+
+| name    |
++---------+
+| Fathima |
+| Aneetha |
+| Krish   |
+| abilash |
+| Fathima |
+| Aneetha |
+| Krish   |
+| Sree    |
+| abilash |
++---------+
+9 rows in set (0.00 sec)
 
 
+__________________________________________________________________________________________
 14.List the names of customers their names have ‘r’ in second position.
 
+mysql> select name from customer where name like '_r%';
++-------+
+| name  |
++-------+
+| Krish |
+| Krish |
+| Sree  |
++-------+
+3 rows in set (0.00 sec)
 
+
+__________________________________________________________________________________________
 15.Find the customer names start with ‘a’ and are at least 3 characters in length.
+
+mysql> select name from customer where name like 'a__';
++------+
+| name |
++------+
+| Anu  |
++------+
+1 row in set (0.01 sec)
+
