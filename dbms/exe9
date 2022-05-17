@@ -1,0 +1,83 @@
+                  				 Experiment No: 9
+
+                       				     JOINS
+
+-----------------------------------------------------------------------------------------------------------------
+
+
+1. List the product name and quantity of invoice items.
+
+mysql> SELECT product.pname,Invoiceitem.quantity FROM product INNER JOIN Invoiceitem ON product.pid=Invoiceitem.pid;
++-------------+----------+
+| pname       | quantity |
++-------------+----------+
+| book        |        4 |
+| pen         |        4 |
+| pen         |        9 |
+| bag         |        4 |
+| record book |        1 |
+| record book |        6 |
++-------------+----------+
+6 rows in set (0.00 sec)
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+2.Display invoice details of the transaction dated ’31-01-2022’.
+
+
+mysql> SELECT customer.name,product.pname,product.price,Invoiceitem.quantity from customer natural join product  natural join Invoiceitem natural join invoicemaster  where inv_date='2022-01-31';
+
++------+-------+-------+----------+
+| name | pname | price | quantity |
++------+-------+-------+----------+
+| manu | pen   | 10.20 |        9 |
++------+-------+-------+----------+
+1 row in set (0.00 sec)
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+3.Display the customer name, product name, invoice date of purchased item ‘pen’.
+
+mysql> select customer.name,product.pname,invoicemaster.inv_date from customer  natural join product  natural join Invoiceitem  natural join invoicemaster   where product.pname='pen';
+
+
++---------+-------+------------+
+| name    | pname | inv_date   |
++---------+-------+------------+
+| arunima | pen   | 2021-08-18 |
+| manu    | pen   | 2022-01-31 |
++---------+-------+------------+
+2 rows in set (0.00 sec)
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+4.Display all customer details and invoice details must include customer has not purchased items
+
+
+mysql> select customer.name,invoicemaster.inv_date,invoicemaster.inv_id,product.pname,Invoiceitem.quantity from customer left join invoicemaster on customer.cid=invoicemaster.cid left join Invoiceitem on invoicemaster.inv_id=Invoiceitem.inv_id left join product on Invoiceitem.pid=product.pid;
+
+
++---------+------------+--------+-------------+----------+
+| name    | inv_date   | inv_id | pname       | quantity |
++---------+------------+--------+-------------+----------+
+| abhi    | 2022-02-21 |    102 | book        |        4 |
+| arunima | 2021-08-18 |    104 | pen         |        4 |
+| manu    | 2022-01-31 |    101 | pen         |        9 |
+| abhi    | 2022-02-21 |    102 | bag         |        4 |
+| abhi    | 2022-02-21 |    102 | record book |        1 |
+| arunima | 2021-08-18 |    104 | record book |        6 |
+| ram     | 2022-04-01 |    103 | NULL        |     NULL |
+| surya   | 2022-05-01 |    105 | NULL        |     NULL |
+| anu     | NULL       |   NULL | NULL        |     NULL |
+| ambili  | NULL       |   NULL | NULL        |     NULL |
+| krishna | NULL       |   NULL | NULL        |     NULL |
+| anusree | NULL       |   NULL | NULL        |     NULL |
++---------+------------+--------+-------------+----------+
+12 rows in set (0.00 sec)
+
+
+
+

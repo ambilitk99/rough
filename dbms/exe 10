@@ -1,0 +1,50 @@
+						Experiment No: 10
+		
+						     VIEWS
+
+---------------------------------------------------------------------------------------------------------
+
+
+1. Create a view for customers who have purchased products.
+
+
+mysql>  create view cust_product as select customer.*from customer join invoicemaster on customer.cid=invoicemaster.cid;
+
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> select * from cust_product;
+
++-----+---------+--------------+-----------+-----------+
+| cid | name    | address      | city      | phn_no    |
++-----+---------+--------------+-----------+-----------+
+|   1 | manu    | mukkam       | calicut   | 984525631 |
+|   2 | abhi    | thamarasseri | kozhikode | 908766789 |
+|   3 | ram     | koyilandy    | ekm       | 908787654 |
+|   4 | arunima | nanminda     | kozhikode | 908765432 |
+|   5 | surya   | vattoli      | tvm       | 478596321 |
++-----+---------+--------------+-----------+-----------+
+5 rows in set (0.00 sec)
+
+
+---------------------------------------------------------------------------------------------------------
+
+2. Create a view for invoice products[cname, , inv_id, product_id, quantity]
+
+mysql> create view invoproduct as select customer.name,invoicemaster.inv_id,product.pid,Invoiceitem.quantity from customer inner join invoicemaster on customer.cid=invoicemaster.cid inner join Invoiceitem on invoicemaster.inv_id=Invoiceitem.inv_id inner join product on Invoiceitem.pid=product.pid;
+
+
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> select * from invoproduct;
++---------+--------+-----+----------+
+| name    | inv_id | pid | quantity |
++---------+--------+-----+----------+
+| abhi    |    102 |   2 |        4 |
+| arunima |    104 |   1 |        4 |
+| manu    |    101 |   1 |        9 |
+| abhi    |    102 |   3 |        4 |
+| abhi    |    102 |   4 |        1 |
+| arunima |    104 |   4 |        6 |
++---------+--------+-----+----------+
+6 rows in set (0.02 sec)
+
