@@ -1,0 +1,86 @@
+						Experiment No: 16
+
+					     PL/SQL PROGRAMS – TRIGGERS
+
+
+1.Create a trigger to handle updates to the customer table.
+
+
+mysql> delimiter //
+
+mysql> create trigger uptri
+    -> before update
+    -> on customer for each row
+    -> begin
+    -> insert into customer_update
+    -> values(old.cid,old.name,old.address,old.city,old.phn_no);
+    -> end //
+Query OK, 0 rows affected (0.06 sec)
+
+
+mysql> delimiter ;
+
+
+mysql> select * from customer;
+    
++-----+---------+--------------+-----------+-----------+
+| cid | name    | address      | city      | phn_no    |
++-----+---------+--------------+-----------+-----------+
+|   1 | manu    | mukkam       | calicut   | 984525631 |
+|   2 | abhi    | thamarasseri | kozhikode | 908766789 |
+|   3 | ram     | koyilandy    | ekm       | 908787654 |
+|   4 | arunima | nanminda     | kozhikode | 908765432 |
+|   5 | surya   | vattoli      | tvm       | 478596321 |
+|   6 | anu     | balusseri    | tvm       |      NULL |
+|   7 | ambili  | nanminda     | tvm       | 908765432 |
+|   8 | krishna | balussery    | tvm       | 900765432 |
+|   9 | anusree | koyilndy     | tvm       | 990765432 |
++-----+---------+--------------+-----------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> create table customer_update(cid int,name varchar(20),address varchar(30),city varchar(20),phn_no int);
+    
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> update  customer set city='ekm' where cid=8;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customer_update;
++------+---------+-----------+------+-----------+
+| cid  | name    | address   | city | phn_no    |
++------+---------+-----------+------+-----------+
+|    8 | krishna | balussery | tvm  | 900765432 |
++------+---------+-----------+------+-----------+
+1 row in set (0.00 sec)
+
+
+
+2.Create a trigger to handle inserts to the product relation ( if price < 5 the set price to 10).
+
+
+
+
+DELIMITER $$
+CREATE TRIGGER trigger_name
+trigger_time trigger_event
+ON table_name FOR EACH ROW
+BEGIN
+-- statements
+END $$
+DELIMITER;
+
+
+
+
+DELIMITER $$
+CREATE TRIGGER Updated_Sales_Data
+AFTER UPDATE
+ON InitialSales FOR EACH ROW
+BEGIN
+IF OLD.qty<>new.qty THEN
+INSERT INTO SalesUpdates(sales_Id,InitialQuantity, UpdatedQuantity)
+VALUES(old.prodId, old.qty, new.qty);
+END IF;
+END $$
+DELIMITER;
